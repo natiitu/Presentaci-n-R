@@ -4,6 +4,19 @@ author: "Natali Zamora Bugueño"
 date: "06-10-2020"
 output: ioslides_presentation
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(bookdown)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(devtools)
+library(kableExtra)
+library(knitr)
+library(readxl)
+data <- read_excel("data.xlsx")
+```
 
 ## Introducción: Chile un país minero y agrícola {.smaller .build}
 
@@ -28,14 +41,20 @@ que evalúen cómo se comportan aislados ambientales que se encuentran en suelos
 
 * Conociendo la problemática que se presenta en los suelos de la región de Valparaíso los cuales tienen registro de actividad minera y refinadora de cobre por los últimos 60 años, nos preguntamos qué ocurre con el número de bacterias en los suelos suelos aledaños a las refinerías de cobre y cómo les afecta la presencia de altas concentraciones de metales pesados.
 
+## Resultados
 
-```{r cars, echo = TRUE}
-summary(cars)
+# Análisis de correlación
+```{r data, echo=FALSE, message=FALSE}
+correlacion <- cor(data)
+kable(correlacion, digits = 2, caption = "Tabla de análisis correlación entre las variables físico-químicas y biológicas medidas en las muestras de suelos de Puchuncaví") %>% kable_styling(bootstrap_options = c("striped", 
+    "hover", "condensed"))
+```
 ```
 
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
+```{r data, message=FALSE, echo=FALSE}
+correlacion<- cor(data)
+corrplot::corrplot(correlación)
+ggplot(data = data) +
+geom_point(mapping = aes(x = pH, y = bacterias)) + xlab("pH") + ylab("Concentración bacterias (UFC/g)")
 ```
 
