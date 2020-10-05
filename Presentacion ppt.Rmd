@@ -1,0 +1,41 @@
+---
+title: "Caracterización de las propiedades físico-químicas y microbiológicas de los suelos de Puchuncaví y El Melón"
+author: "Natali Zamora Bugueño"
+date: "06-10-2020"
+output: ioslides_presentation
+---
+
+## Introducción: Chile un país minero y agrícola {.smaller .build}
+
+* Chile basa gran parte de su economía en la extracción, refinación y exportación de metales como el cobre y zinc, posicionándose a nivel mundial entre los primeros países con mayor producción, llegando a aportar hasta un 31,5% de demanda mundial de cobre (Comisión Chilena de Cobre <http://www.cochilco.cl>.
+
+* Producción que se genera principalmente entre las regiones norte a centro del país. 
+
+* Los problemas ambientales asociados con la minería son ampliamente conocidos, particularmente en relación a la contaminación de suelos con metales, elementos que disminuyen la calidad y presentan riesgo para el buen funcionamiento de este *(Bloem et al. 2009)*.
+
+
+## Introducción: suelos agrícolas contaminados y bacterias {.smaller .build}
+
+* Gran parte de esta producción se centra en las regiones centrales y sur del país, donde ocurre un solapamiento de los sectores productivos generando contaminación de metales en suelos de carácter agrícola; como lo reporta *Parra et al., 2014*.
+
+*  Si bien se conoce la respuesta de algunas bacterias a la presión causada por elevadas concentraciones de metales, no existen estudios
+que evalúen cómo se comportan aislados ambientales que se encuentran en suelos que ya tienen altas concentraciones de estos elementos.
+
+
+## Propósito de estudio {.smaller .build}
+
+* Este estudio es del tipo exploratorio con alcance correlacional y descritivo en donde se caracterizará las características físico-químicas y biológicas medidas en los suelos aledaños a empresas mineras.
+
+* Conociendo la problemática que se presenta en los suelos de la región de Valparaíso los cuales tienen registro de actividad minera y refinadora de cobre por los últimos 60 años, nos preguntamos qué ocurre con el número de bacterias en los suelos suelos aledaños a las refinerías de cobre y cómo les afecta la presencia de altas concentraciones de metales pesados.
+
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
