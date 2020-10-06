@@ -1,8 +1,12 @@
 ---
-title: "Caracterización de las propiedades físico-químicas y microbiológicas de los suelos de Puchuncaví y El Melón"
+title: "Estudio correlacional entre las propiedades físico-químicas y microbiológicas de los suelos de Puchuncaví aledaños a la refinería CODELCO Ventanas"
 author: "Natali Zamora Bugueño"
 date: "06-10-2020"
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    smaller: true
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -15,10 +19,11 @@ library(devtools)
 library(kableExtra)
 library(knitr)
 library(readxl)
+library(broom)
 data <- read_excel("data.xlsx")
 ```
 
-## Introducción: Chile un país minero y agrícola {.smaller .build}
+## Introducción: Chile un país minero y agrícola {.smaller}
 
 * Chile basa gran parte de su economía en la extracción, refinación y exportación de metales como el cobre y zinc, posicionándose a nivel mundial entre los primeros países con mayor producción, llegando a aportar hasta un 31,5% de demanda mundial de cobre (Comisión Chilena de Cobre <http://www.cochilco.cl>.
 
@@ -26,35 +31,72 @@ data <- read_excel("data.xlsx")
 
 * Los problemas ambientales asociados con la minería son ampliamente conocidos, particularmente en relación a la contaminación de suelos con metales, elementos que disminuyen la calidad y presentan riesgo para el buen funcionamiento de este *(Bloem et al. 2009)*.
 
-
-## Introducción: suelos agrícolas contaminados y bacterias {.smaller .build}
-
 * Gran parte de esta producción se centra en las regiones centrales y sur del país, donde ocurre un solapamiento de los sectores productivos generando contaminación de metales en suelos de carácter agrícola; como lo reporta *Parra et al., 2014*.
 
 *  Si bien se conoce la respuesta de algunas bacterias a la presión causada por elevadas concentraciones de metales, no existen estudios
 que evalúen cómo se comportan aislados ambientales que se encuentran en suelos que ya tienen altas concentraciones de estos elementos.
 
 
-## Propósito de estudio {.smaller .build}
+## Propósito de estudio {.smaller}
 
-* Este estudio es del tipo exploratorio con alcance correlacional y descritivo en donde se caracterizará las características físico-químicas y biológicas medidas en los suelos aledaños a empresas mineras.
+* Este estudio es del tipo exploratorio con alcance correlacional y descriptivo en donde se caracterizará las características físico-químicas y biológicas medidas en los suelos aledaños a empresas mineras.
 
 * Conociendo la problemática que se presenta en los suelos de la región de Valparaíso los cuales tienen registro de actividad minera y refinadora de cobre por los últimos 60 años, nos preguntamos qué ocurre con el número de bacterias en los suelos suelos aledaños a las refinerías de cobre y cómo les afecta la presencia de altas concentraciones de metales pesados.
 
-## Resultados
+* El objetivo central de este estudio es correlacionar y plantear un modelo entre las variables físico-químicas y biológicas que fueron medidas en los suelos muestreados de Puchuncaví.
 
-# Análisis de correlación
+## Metodología {.smaller}
+
+* **Área de estudio:** Para el presente estudio, se seleccionaron los sectores de Puchuncaví pertenecientes a la Región de Valparaíso, como áreas de estudio ya que presentan suelos de carácter agrícola históricamente contaminados. Para cada muestra se registraron las coordenadas y el tipo de cultivo presente. En cada punto se tomaron cuatro muestras de igual tamaño las cuales fueron mezcladas y posteriormente tamizadas en una malla de 2 mm para obtener una sola muestra compuesta. Las muestras fueron conservadas a 4°C hasta su uso.  
+
+* **Determinación de las características físico-químicas:**Para determinar las características fisicoquímicas generales de los suelos, se recolectó 1 kg desub-muestra la cual fue guardada en bolsas resellables y una alícuota de 50 gr fue guardada en tubo falcon bajo condiciones esteriles para los análisis microbiológicos. Cada sub-muestra fue secada a 40°C por 48 horas. Las características fisicoquímicas generales de los suelos (conductividad eléctrica, pH, contenido de materia orgánica, relación carbono-nitrógeno y texturas) fueron determinadas por métodos de rutina (Verdejo et al. 2015). Las concentraciones de cobre disponible y de metales totales y solubles fueron determinadas por espectroscopia atómica de masas. Los análisis fueron realizados por el Laboratorio de Suelos y Análisis Foliar de la Facultad de Agronomía de la PUCV. 
+ 
+* **Determinación del número de bacterias en las muestras de suelo:** Para la determinación del número de bacterias se utilizó el método de número más probable (NMP) (Cochran 1950). Se pesó 10 g de suelo seco y se diluyeron en 90 ml de buffer fosfato (PBS) (Anexo 1.1). La solución fue sometida a agitación orbital a 200 rpm por 30 min a 30°C para homogenizar y disolver los agregados de suelo (Altimira et al. 2012).
+
+
+## Resultados {.smaller}
+
+**1) Descripción de datos**
+
+* A partir de los resultados presentados en la tabla 1. Se puede determinar que el pH promedio de las muestras de suelos es 6,34. Mientras que el promedio del porcentaje de materia orgánica es 3,19%, el promedio de conductividad eléctrica que poseen los suelos es 1,01. 
+
+* En cuanto a la textura de los suelos, estos poseen un porcentaje promedio de arena del 82,4%,de limo 13,38% y arcilla, 4,22%.
+
+* En cuanto a la concentración de metales pesados, los suelos de Puchuncaví poseen en promedio 42,77 mg/kg de plomo, 380,95 mg/Kg de cobre, 140,15 mg/Kg de Zinc, 1,16 mg/kg de cadmio y 23,03 mg/kg de arsénico.
+
+* En términos de parámetros biológicos, en promedio los suelos muestreados poseen 9,45x10^6 UFC/g suelo y además, poseen una diversidad promedio de 2,83.
+
 ```{r data, echo=FALSE, message=FALSE}
-correlacion <- cor(data)
-kable(correlacion, digits = 2, caption = "Tabla de análisis correlación entre las variables físico-químicas y biológicas medidas en las muestras de suelos de Puchuncaví") %>% kable_styling(bootstrap_options = c("striped", 
+data1 <- data %>% summarise_all(mean)
+kable(data1, digits = 2, caption = "Tabla 1. Medias de las variables físico-químicas y biológicas medidas en las muestras de suelos de Puchuncaví.") %>% kable_styling(bootstrap_options = c("striped", 
     "hover", "condensed"))
 ```
+ 
+## Resultados {.smaller}
+
+**2) Análisis de correlación**
+
+En términos del análisis de correlación de Pearson (P<0,05) entre las variables físico-químicas y biológicas se obtuvieron correlaciones débiles a moderadas y algunas con tendencia negativa.
+
+
+```{r data2, echo=FALSE, message=FALSE}
+correlacion <- cor(data) 
+
+kable(correlacion, digits = 2, caption = "Tabla 2. Resultados análisis correlación entre las variables físico-químicas y biológicas medidas en las muestras de suelos de Puchuncaví.") %>% kable_styling(bootstrap_options = c("striped", 
+    "hover", "condensed"))
 ```
 
-```{r data, message=FALSE, echo=FALSE}
-correlacion<- cor(data)
-corrplot::corrplot(correlación)
-ggplot(data = data) +
-geom_point(mapping = aes(x = pH, y = bacterias)) + xlab("pH") + ylab("Concentración bacterias (UFC/g)")
+## Resultados {.smaller}
+
+**2) Análisis de correlación**
+
+```{r data3, echo=FALSE, message=FALSE, fig.cap="**Fig.1 Matriz de análisis de correlación**"}
+corrplot::corrplot(correlacion)
+
 ```
+## Resultados
+
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+
 
