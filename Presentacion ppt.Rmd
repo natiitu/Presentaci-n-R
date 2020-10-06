@@ -94,9 +94,51 @@ kable(correlacion, digits = 2, caption = "Tabla 2. Resultados análisis correlac
 corrplot::corrplot(correlacion)
 
 ```
-## Resultados
+## Resultados {.smaller}
 
 **3) Modelo propuesto entre las variables físico-químicas y biológicas:**
 
+```{r data4, echo=FALSE,message=FALSE, fig.cap=" Fig.2 Gráfica de dispersión de variables pH y número total de bacterias presentes en el suelo muestreado."}
+(ggplot(data = data) + geom_point(mapping = aes(x = pH, y = bacterias), color = "blue"))
 
+```
 
+## Resultados {.smaller}
+
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+```{r data 5, echo=FALSE,message=FALSE}
+fit1 <- lm(bacterias~pH,data = data)
+fit2 <- glance(fit1)
+kable(fit2, digits = 2, caption = "**Tabla 3. Indicadores estadísticos de modelo propuesto (diversidad~pH)**") %>% kable_styling(bootstrap_options = c("striped", 
+    "hover", "condensed"))
+```
+
+## Resultados {.smaller}
+
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+```{r data 6, echo=FALSE,message=FALSE}
+fit3 <-tidy(fit1)
+kable(fit3, digits = 2, caption = "**Tabla 4. Indicadores estadísticos de modelo propuesto (diversidad~pH) obtenidos mediante tidy**") %>% kable_styling(bootstrap_options = c("striped", 
+    "hover", "condensed"))
+```
+
+## Resultados {.smaller}
+ 
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+```{r data7, echo=FALSE,message=FALSE}
+fit4 <- augment(fit1)
+kable(fit4, digits = 2, caption = "**Tabla 5. Predicciones y residuales del modelo propuesto (diversidad~pH)**") %>% kable_styling(bootstrap_options = c("striped", 
+    "hover", "condensed"))
+hist(fit4$.resid)
+```
+
+## Resultados {.smaller}
+
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+```{r data8, echo=FALSE,message=FALSE, fig.cap= "**Figura 3. Histograma residuales**"}
+hist(fit4$.resid)
+```
