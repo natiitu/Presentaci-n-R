@@ -18,6 +18,8 @@ library(readr)
 library(devtools)
 library(kableExtra)
 library(knitr)
+library(FactoMineR)
+library(factoextra)
 library(readxl)
 library(broom)
 data <- read_excel("data.xlsx")
@@ -94,6 +96,8 @@ kable(correlacion, digits = 2, caption = "Tabla 2. Resultados análisis correlac
 corrplot::corrplot(correlacion)
 
 ```
+
+
 ## Resultados {.smaller}
 
 **3) Modelo propuesto entre las variables físico-químicas y biológicas:**
@@ -108,7 +112,7 @@ corrplot::corrplot(correlacion)
 **3) Modelo propuesto entre las variables físico-químicas y biológicas:**
 
 ```{r data 5, echo=FALSE,message=FALSE}
-fit1 <- lm(bacterias~pH,data = data)
+fit1 <- lm(diversidad~pH,data = data)
 fit2 <- glance(fit1)
 kable(fit2, digits = 2, caption = "**Tabla 3. Indicadores estadísticos de modelo propuesto (diversidad~pH)**") %>% kable_styling(bootstrap_options = c("striped", 
     "hover", "condensed"))
@@ -142,3 +146,69 @@ hist(fit4$.resid)
 ```{r data8, echo=FALSE,message=FALSE, fig.cap= "**Figura 3. Histograma residuales**"}
 hist(fit4$.resid)
 ```
+
+## Resultados {.smaller}
+
+**3) Modelo propuesto entre las variables físico-químicas y biológicas:**
+
+* Podría ajustarse mejor si explicamos la variable diversidad con otras variables, como por ejemplo con la presencia de las variables de concentración de metales pesados que fueron medidos en el estudio (cobre, Zinc, plomo y arsénico ). Se logró observar mediante el valor de AIC que entre los diferentes modelos propuestos, los mejores modelos eran **diversidad ~ pH** y **diversidad ~ pH + cobre**.
+
+
+```{r data9, echo=FALSE,message=FALSE}
+fit1 <- lm(diversidad~pH,data = data)
+fit2 <- glance(fit1)
+cobre1 <- lm(diversidad~pH + cobre,data = data)
+cobre2 <- glance(cobre1)
+plomo1 <- lm(diversidad~pH + cobre + plomo,data = data)
+plomo2 <- glance(plomo1)
+arsenico1 <- lm(diversidad~pH + cobre + plomo + arsenico,data = data)
+arsenico2 <- glance(arsenico1)
+Zinc1 <- lm(diversidad~pH + cobre + plomo + arsenico + zinc,data = data)
+Zinc2 <- glance(Zinc1)
+
+Modelo1 <- fit2 %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo="fit1")
+Modelo2 <- cobre2 %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo="cobre1")
+Modelo3 <- plomo2 %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo="plomo1")
+Modelo4 <- arsenico2 %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo= "arsenico1")
+Modelo5 <- Zinc2 %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo="Zinc1")
+
+Modelos <- bind_rows(Modelo1, Modelo2, Modelo3, Modelo4, Modelo5) %>% arrange(AIC) %>% mutate(DeltaAIC = AIC - 
+    min(AIC))
+
+kable(Modelos, digits = 2, caption = "**Tabla 6. Tabla con valores de r^2 y valor del criterio de información de Akaike (AIC) de los diferentes modelos propuestos en el estudio**") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+## Discusiones y conclusión {.smaller}
+* *Kuppusamy et al.,2016*, describieron el efecto de los metales y de los hidrocarburos aromáticos en la diversidad y
+abundancia de las comunidades microbianas a largo término, encontrando que en un periodo de disturbio cero las comunidades bacterianas se ven fuertemente influenciadas generando una gran reducción en la diversidad, partiendo con una selección de bacterias resistentes *(Chibuike & Obiora, 2014 y Kamnev et al., 2005)*. 
+
+* Sin embargo, cuando se presenta una periodicidad de disturbio (contaminación) durante un tiempo prolongado, las comunidades bacterianas resistentes de estos suelos tienden a desarrollarse y en un periodo largo de tiempo no se observan diferencias significativas entre las abundancias de un suelo poco contaminado a uno altamente contaminado *(Aleem, Isar and Malik 2003; Kuppusamy et al. 2016)*. Los suelos 30 analizados en este estudio han sido afectados por contaminantes durante aproximadamente 60 años con periodos de contaminación constante *(Altimira et al. 2012; Parra et al. 2014; Salmanighabeshi et al. 2015)*.
+
+* Los suelos de los diferentes biomas alojan distintos ensamblajes de taxas microbianos, cuya estructura y composición se ve fuertemente influenciado por el parámetro ambiental de pH. Los suelos con pH neutro poseen una mayor diversidad a nivel de phylum con respecto a los suelos que poseen mayor acidez y alcalinidad *(Fierer et.al, 2012)*.
+
+* Debido a la elevada contaminación y al interés que generan estos suelos por ser de carácter agrícola, es de vital importancia poseer un mecanismo de recuperación que restaure la salud de estos ecosistemas.
+
+## Referencias
+
+* *Aleem A, Isar J, Malik A. Impact of long-term application of industrial wastewater on the emergence of resistance traits in Azotobacter chroococcum isolated from rhizospheric soil. Bioresour Technol 2003;86:7–13.* 
+* *Altimira F, Yáñez C, Bravo G et al. Characterization of copper-resistant bacteria and bacterial communities from copper-polluted agricultural soils of central Chile. BMC Microbiol 2012;12:193.* 
+
+* *Bloem J, Schouten  a J, Sorensen SJ et al. Monitoring and Evaluating Soil Quality., 2009.*
+
+* *Chibuike GU, Obiora SC. Heavy Metal Polluted Soils: Effect on Plants and Bioremediation Methods. Appl Environ Soil Sci 2014;2014:1–12.*
+
+* *Fierer N, Leff JW, Adams BJ, et al.(2012) Cross-biome metagenomicanalyses of soil microbial communities and
+their functional attributes. P Natl Acad Sci USA 109:21390–5.*
+
+## Referencias
+
+* *Kamnev AA, Tugarova A V, Antonyuk LP et al. Effects of heavy metals on plant-associated rhizobacteria: comparison of endophytic and non-endophytic strains of Azospirillum brasilense. J trace Elem Med Biol 2005;19:91–5.*
+
+* *Kuppusamy S, Thavamani P, Megharaj M et al. Pyrosequencing analysis of bacterial diversity in
+soils contaminated long-term with PAHs and heavy metals: Implications to bioremediation. J Hazard Mater 2016;317:169–79.* 
+
+* *Salmanighabeshi S, Palomo-Marín MR, Bernalte E et al. Long-term assessment of ecological risk from deposition of elemental pollutants in the vicinity of the industrial area of Puchuncaví Ventanas, central
+Chile. Sci Total Environ 2015;527–528:335–43.*
+
+* *Parra S, Bravo MA, Quiroz W et al. Distribution of trace elements in particle size fractions for
+contaminated soils by a copper smelting from different zones of the Puchuncaví Valley (Chile). Chemosphere 2014;111:513–21.* 
